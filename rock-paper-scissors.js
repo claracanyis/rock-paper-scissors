@@ -18,4 +18,13 @@ function getComputerChoice() {
     }
 }
 
-console.log(getComputerChoice());
+// Get user's choice
+function getHumanChoice() {
+    let choice = prompt('Rock, Paper or Scissors?');
+    choice = choice.toLowerCase();
+    if (choice == 'rock' || choice == 'paper' || choice == 'scissors') {
+        return choice;
+    }
+    return 'Invalid choice';
+}
+
