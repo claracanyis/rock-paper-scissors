@@ -33,11 +33,12 @@ function getHumanChoice() {
 }
 
 // Play one round
-function playRound() {
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
+function playRound(humanChoice, computerChoice) {
+
     let humanWin = false;
     if (humanChoice == computerChoice) {
+        ++humanScore;
+        ++computerScore;
         return `It's a tie! you both chose ${humanChoice}`;
     }
     switch (humanChoice) {
@@ -53,11 +54,11 @@ function playRound() {
         default:
             return humanChoice;
     }
-    
+    humanWin ? ++humanScore : ++computerScore;
     return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
 }
 
-console.log(playRound());
+console.log(playRound(getHumanChoice(),getComputerChoice()));
 console.log('Human Score: ' + humanScore);
 console.log('Computer Score: ' + computerScore);
 
