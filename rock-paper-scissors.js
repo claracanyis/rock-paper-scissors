@@ -1,4 +1,4 @@
-// Game score
+// Global variables
 let humanScore = 0;
 let computerScore = 0;
 
@@ -58,7 +58,14 @@ function playRound(humanChoice, computerChoice) {
     return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
 }
 
-console.log(playRound(getHumanChoice(),getComputerChoice()));
-console.log('Human Score: ' + humanScore);
-console.log('Computer Score: ' + computerScore);
+// Plays a full game with 5 rounds:
+function playGame() {
+    console.log('Game starts! your score is ' + humanScore + ' and the computer score is ' + computerScore);
+    for (let i = 1; i <= 5; i++) {
+        console.log(playRound(getHumanChoice(), getComputerChoice()));
+    }
+    console.log('Human score: ' + humanScore + ' | Computer score: ' + computerScore);
+}
+
+playGame();
 
