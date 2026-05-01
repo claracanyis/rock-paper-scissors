@@ -1,3 +1,7 @@
+// Game score
+let humanScore = 0;
+let computerScore = 0;
+
 // Create random integer from 0 to (max - 1):
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -27,4 +31,33 @@ function getHumanChoice() {
     }
     return 'Invalid choice';
 }
+
+// Play one round
+function playRound() {
+    const humanChoice = getHumanChoice();
+    const computerChoice = getComputerChoice();
+    let humanWin = false;
+    if (humanChoice == computerChoice) {
+        return `It's a tie! you both chose ${humanChoice}`;
+    }
+    switch (humanChoice) {
+        case 'rock':
+            humanWin = (computerChoice == 'paper') ? false : true;
+            break;
+        case 'paper':
+            humanWin = (computerChoice == 'scissors') ? false : true;
+            break;
+        case 'scissors':
+            humanWin = (computerChoice == 'rock') ? false : true;
+            break;
+        default:
+            return humanChoice;
+    }
+    
+    return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
+}
+
+console.log(playRound());
+console.log('Human Score: ' + humanScore);
+console.log('Computer Score: ' + computerScore);
 
