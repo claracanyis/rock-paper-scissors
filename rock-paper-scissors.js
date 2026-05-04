@@ -62,14 +62,17 @@ function playRound(humanChoice, computerChoice) {
     return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
 }
 
-// // Plays a full game with 5 rounds:
-// function playGame() {
-//     console.log('Game starts! your score is ' + humanScore + ' and the computer score is ' + computerScore);
-//     for (let i = 1; i <= 5; i++) {
-//         console.log(playRound(getHumanChoice(), getComputerChoice()));
-//     }
-//     console.log('Human score: ' + humanScore + ' | Computer score: ' + computerScore);
-// }
+// Plays a full game with 5 rounds:
+function playGame() {
+    while (humanScore < 5 && computerScore < 5) {
+        btnRock.addEventListener('click', () => {playRound('rock', getComputerChoice())});
+        btnPaper.addEventListener('click', () => {playRound('paper', getComputerChoice())});
+        btnScissors.addEventListener('click', () => {playRound('scissors', getComputerChoice())});
+        
+        updateScore();
+    }
+    showFinalResult();
+}
 
 // playGame();
 
@@ -80,6 +83,20 @@ function addResultMessage(message) {
     div.appendChild(resultMessage);
 }
 
-btnRock.addEventListener('click', () => {playRound('rock', getComputerChoice())});
-btnPaper.addEventListener('click', () => {playRound('paper', getComputerChoice())});
-btnScissors.addEventListener('click', () => {playRound('scissors', getComputerChoice())});
+function updateScore() {
+    let score = document.querySelector("#score");
+    score.textContent = `Human score: ${humanScore} | Computer score: ${computerScore}`;    
+}
+
+function showFinalResult() {
+    const div = document.querySelector("#results");
+    let score = document.querySelector("#score");
+    let finalResult = document.createElement("h1");
+    if (humanScore == 5) {
+        finalResult.textContent = "YOU WIN!";
+    } else {
+        finalResult.textContent = "YOU LOSE!";
+    }
+    div.insertBefore(finalResult,score);
+}
+
