@@ -1,6 +1,9 @@
 // Global variables
 let humanScore = 0;
 let computerScore = 0;
+const btnRock = document.querySelector("#rock");
+const btnPaper = document.querySelector("#paper");
+const btnScissors = document.querySelector("#scissors");
 
 // Create random integer from 0 to (max - 1):
 function getRandomInt(max) {
@@ -55,17 +58,23 @@ function playRound(humanChoice, computerChoice) {
             return humanChoice;
     }
     humanWin ? ++humanScore : ++computerScore;
+
     return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
 }
 
-// Plays a full game with 5 rounds:
-function playGame() {
-    console.log('Game starts! your score is ' + humanScore + ' and the computer score is ' + computerScore);
-    for (let i = 1; i <= 5; i++) {
-        console.log(playRound(getHumanChoice(), getComputerChoice()));
-    }
-    console.log('Human score: ' + humanScore + ' | Computer score: ' + computerScore);
-}
+// // Plays a full game with 5 rounds:
+// function playGame() {
+//     console.log('Game starts! your score is ' + humanScore + ' and the computer score is ' + computerScore);
+//     for (let i = 1; i <= 5; i++) {
+//         console.log(playRound(getHumanChoice(), getComputerChoice()));
+//     }
+//     console.log('Human score: ' + humanScore + ' | Computer score: ' + computerScore);
+// }
 
-playGame();
+// playGame();
 
+
+
+btnRock.addEventListener('click', () => {playRound('rock', getComputerChoice())});
+btnPaper.addEventListener('click', () => {playRound('paper', getComputerChoice())});
+btnScissors.addEventListener('click', () => {playRound('scissors', getComputerChoice())});
