@@ -58,7 +58,7 @@ function playRound(humanChoice, computerChoice) {
             return humanChoice;
     }
     humanWin ? ++humanScore : ++computerScore;
-
+    addResultMessage(humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`);
     return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
 }
 
@@ -73,7 +73,12 @@ function playRound(humanChoice, computerChoice) {
 
 // playGame();
 
-
+function addResultMessage(message) {
+    const div = document.querySelector("#results");
+    let resultMessage = document.createElement("p");
+    resultMessage.textContent = message;
+    div.appendChild(resultMessage);
+}
 
 btnRock.addEventListener('click', () => {playRound('rock', getComputerChoice())});
 btnPaper.addEventListener('click', () => {playRound('paper', getComputerChoice())});
