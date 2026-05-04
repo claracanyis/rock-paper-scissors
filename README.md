@@ -12,3 +12,5 @@ You can find the website here: https://claracanyis.github.io/rock-paper-scissors
 * For loop
 * Template literals (strings)
 * Console log and prompt functions
+* DOM modification
+* Event listeners
