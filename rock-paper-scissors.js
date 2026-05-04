@@ -1,9 +1,15 @@
 // Global variables
 let humanScore = 0;
 let computerScore = 0;
+const div = document.querySelector("#results");
+const buttons = document.querySelector("#buttons");
+const btnStart = document.querySelector("#start");
+
 const btnRock = document.querySelector("#rock");
 const btnPaper = document.querySelector("#paper");
 const btnScissors = document.querySelector("#scissors");
+
+let finalResult = document.createElement("h1");
 
 // Create random integer from 0 to (max - 1):
 function getRandomInt(max) {
@@ -42,42 +48,37 @@ function playRound(humanChoice, computerChoice) {
     if (humanChoice == computerChoice) {
         ++humanScore;
         ++computerScore;
-        return `It's a tie! you both chose ${humanChoice}`;
-    }
-    switch (humanChoice) {
-        case 'rock':
-            humanWin = (computerChoice == 'paper') ? false : true;
-            break;
-        case 'paper':
-            humanWin = (computerChoice == 'scissors') ? false : true;
-            break;
-        case 'scissors':
-            humanWin = (computerChoice == 'rock') ? false : true;
-            break;
-        default:
-            return humanChoice;
-    }
-    humanWin ? ++humanScore : ++computerScore;
-    addResultMessage(humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`);
-    return humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`;
-}
+        addResultMessage(`It's a tie! you both chose ${humanChoice}`);
+        updateScore();
+    } else {
+         switch (humanChoice) {
+            case 'rock':
+                humanWin = (computerChoice == 'paper') ? false : true;
+                break;
+            case 'paper':
+                humanWin = (computerChoice == 'scissors') ? false : true;
+                break;
+            case 'scissors':
+                humanWin = (computerChoice == 'rock') ? false : true;
+                break;
+            default:
+                return humanChoice;
+        };
 
-// Plays a full game with 5 rounds:
-function playGame() {
-    while (humanScore < 5 && computerScore < 5) {
-        btnRock.addEventListener('click', () => {playRound('rock', getComputerChoice())});
-        btnPaper.addEventListener('click', () => {playRound('paper', getComputerChoice())});
-        btnScissors.addEventListener('click', () => {playRound('scissors', getComputerChoice())});
-        
+        humanWin ? ++humanScore : ++computerScore;
+        addResultMessage(humanWin ? `You win! ${humanChoice} beats ${computerChoice}` : `You lose! ${computerChoice} beats ${humanChoice}`);
         updateScore();
     }
-    showFinalResult();
+   
+    if (humanScore == 5 || computerScore == 5) {showFinalResult()};
 }
 
-// playGame();
+btnRock.addEventListener('click', () => {playRound('rock', getComputerChoice())});
+btnPaper.addEventListener('click', () => {playRound('paper', getComputerChoice())});
+btnScissors.addEventListener('click', () => {playRound('scissors', getComputerChoice())});
+
 
 function addResultMessage(message) {
-    const div = document.querySelector("#results");
     let resultMessage = document.createElement("p");
     resultMessage.textContent = message;
     div.appendChild(resultMessage);
@@ -89,14 +90,40 @@ function updateScore() {
 }
 
 function showFinalResult() {
-    const div = document.querySelector("#results");
     let score = document.querySelector("#score");
-    let finalResult = document.createElement("h1");
-    if (humanScore == 5) {
+    
+    if (humanScore == 5 && computerScore == 5) {
+        finalResult.textContent = "YOU TIE!";
+    } else if (humanScore == 5) {
         finalResult.textContent = "YOU WIN!";
     } else {
         finalResult.textContent = "YOU LOSE!";
     }
     div.insertBefore(finalResult,score);
+
+    // Reset game
+    btnStart.setAttribute("style", "display: inline-block");
+    btnRock.setAttribute("style", "display: none");
+    btnPaper.setAttribute("style", "display: none");
+    btnScissors.setAttribute("style", "display: none");
 }
 
+function resetGame() {
+    if (humanScore != 0 || computerScore != 0) {
+        for (let element of div.querySelectorAll("p")) {
+            element.remove();
+        }
+        finalResult.remove();
+        humanScore = 0;
+        computerScore = 0;
+        updateScore();
+    }
+}
+
+btnStart.addEventListener('click',() => {
+    resetGame();
+    btnStart.setAttribute("style", "display: none");
+    btnRock.setAttribute("style", "display: inline-block");
+    btnPaper.setAttribute("style", "display: inline-block");
+    btnScissors.setAttribute("style", "display: inline-block");
+});
